@@ -42,6 +42,7 @@ abstract class SKBaseDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         var window = dialog.window
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         var layoutView = inflater.inflate(k_layoutId, window.findViewById(android.R.id.content), false)
         beforeOnCreateView(window)
         return layoutView
@@ -68,7 +69,6 @@ abstract class SKBaseDialog : DialogFragment() {
 
 
     private fun beforeOnCreateView(window: Window?) {
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         window?.attributes?.windowAnimations = k_dialogAnimation
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
         window?.setLayout(k_width, k_height)
