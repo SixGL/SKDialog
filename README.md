@@ -1,4 +1,6 @@
 # SKDialog
+![image](https://github.com/SixGL/SKDialog/blob/master/d.gif)
+
 ### 引用方式
 #### 注意
 因为库中时直接引用的项目的kotlin（目的是为了跟项目的Kotlin版本一致）
