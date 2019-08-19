@@ -1,4 +1,4 @@
-package c.s
+package c.s.d
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
@@ -7,6 +7,7 @@ import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
 import android.util.SparseArray
 import android.view.*
+import c.s.d.R
 
 abstract class SKBaseDialog : DialogFragment() {
     companion object {

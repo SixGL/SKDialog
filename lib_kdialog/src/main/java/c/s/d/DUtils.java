@@ -1,4 +1,4 @@
-package c.s;
+package c.s.d;
 
 import android.content.DialogInterface;
 import android.support.v4.app.DialogFragment;

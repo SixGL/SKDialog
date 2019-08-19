@@ -1,15 +1,13 @@
 package c.s.dialog
 
 import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import c.s.SKDialog
+import c.s.d.SKDialog
 
 class MainActivity : AppCompatActivity() {
     var activitys: Activity? = null
