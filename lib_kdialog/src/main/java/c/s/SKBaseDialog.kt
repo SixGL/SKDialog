@@ -5,7 +5,6 @@ import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
 import android.support.v4.app.FragmentManager
-import android.util.Log
 import android.util.SparseArray
 import android.view.*
 
@@ -14,64 +13,68 @@ abstract class SKBaseDialog : DialogFragment() {
         const val TAG = "SKBaseDialog_  "
     }
 
-    var mViews = SparseArray<Int>()
-
+    protected var mViews = SparseArray<Int>()
     protected var k_fragmentManager: FragmentManager? = null
-    protected var k_width: Int = -1
-    protected var k_height: Int = -2
+    protected var k_width: Int = ViewGroup.LayoutParams.MATCH_PARENT
+    protected var k_height: Int = ViewGroup.LayoutParams.WRAP_CONTENT
+    protected var k_fullscreen: Boolean = false
 
     protected var k_dialogOutTransparency: Float = 0.5f
     protected var k_dialogGravity: Int = Gravity.NO_GRAVITY
     protected var k_dialogAnimation: Int = R.style.k_dialogAnim
-    protected var k_layoutId: Int = 0
     protected var k_cancelable: Boolean = false
     protected var k_listener: View.OnClickListener? = null
+    protected var k_layoutId: Int = 0
 
-    override fun onStart() {
-        super.onStart()
-        val window = dialog.window
-        val windowParams = window?.attributes
-        windowParams?.dimAmount = k_dialogOutTransparency
-        windowParams?.gravity = k_dialogGravity
-        window?.attributes = windowParams
-        if (k_cancelable) {
-            DUtils.shield_back_screen(this)
-        }
+    protected var window: Window? = null
+    protected var windowParams: WindowManager.LayoutParams? = null
+
+    private fun isFullScreen(): Int {
+        if (k_fullscreen)
+            return ViewGroup.LayoutParams.MATCH_PARENT
+        else
+            return ViewGroup.LayoutParams.WRAP_CONTENT
+
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        var window = dialog.window
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        var layoutView = inflater.inflate(k_layoutId, window.findViewById(android.R.id.content), false)
-        beforeOnCreateView(window)
+        beforeLayout()
+        var layoutView = inflater.inflate(k_layoutId, window?.findViewById(android.R.id.content), false)
+        afterLayout()
         return layoutView
+    }
+
+
+    private fun beforeLayout() {
+        window = dialog.window
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+    }
+
+    private fun afterLayout() {
+        windowParams = window?.attributes
+        windowParams?.windowAnimations = k_dialogAnimation
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        window?.setLayout(k_width!!, isFullScreen())
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (view != null) {
-            if (mViews != null && mViews?.size() > 0) {
-                for (it in 0 until mViews.size()) {
-                    val keyAt = mViews.keyAt(it)
-                    Log.i(TAG, "layout View id=$keyAt")
-                    val childView = view?.findViewById<View>(mViews.keyAt(it))
-                    if (childView != null)
-                        childView.setOnClickListener(k_listener)
-                    else
-                        Log.i(TAG, "Error ViewId = $keyAt")
-                }
-            }
-        } else {
-            Log.i(TAG, "View is null")
-        }
+        logic()
+
     }
 
+    abstract fun logic()
 
-    private fun beforeOnCreateView(window: Window?) {
-        window?.attributes?.windowAnimations = k_dialogAnimation
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window?.setLayout(k_width, k_height)
+
+    override fun onStart() {
+        super.onStart()
+        windowParams?.dimAmount = k_dialogOutTransparency
+        windowParams?.gravity = k_dialogGravity
+        window?.attributes = windowParams
+        if (k_cancelable!!) {
+            DUtils.shield_back_screen(this)
+        }
     }
 
     override fun onDestroyView() {
@@ -79,14 +82,9 @@ abstract class SKBaseDialog : DialogFragment() {
         if (k_listener != null) {
             k_listener = null
         }
+        if (mViews != null) {
+            mViews.clear()
+        }
     }
-
-
-    fun showDialog() {
-        if (k_fragmentManager == null) return
-        show(k_fragmentManager, "SK")
-    }
-
 
 }
-

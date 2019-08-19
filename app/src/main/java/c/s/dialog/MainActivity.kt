@@ -1,10 +1,13 @@
 package c.s.dialog
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Gravity
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
 import c.s.SKDialog
 
@@ -17,6 +20,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showDialog(v: View) {
+
+
+
         var dialogs = SKDialog()
         dialogs.setContentView(R.layout.dialog)
                 .setViewClick(object : View.OnClickListener {
@@ -30,16 +36,18 @@ class MainActivity : AppCompatActivity() {
                             }
                             R.id.tvCenter -> {
                                 Toast.makeText(activitys, "美丽", Toast.LENGTH_SHORT).show()
+                                dialogs.view?.findViewById<TextView>(R.id.tvCenter)?.text="6666"
                             }
 
                         }
-                        dialogs.dismiss()
+//                        dialogs.dismiss()
                     }
                 }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)
                 .setcancelable(false)
 //                .setAnimation(0)
-                .setDialogOutTransparency(0.5f)
+                .setDialogOutTransparency(0.3f)
                 .setGravity(Gravity.BOTTOM)
+//                .setFullScreen(true)
                 .setFramentManager(supportFragmentManager)
                 .show()
     }

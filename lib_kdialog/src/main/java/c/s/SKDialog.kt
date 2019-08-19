@@ -1,6 +1,7 @@
 package c.s
 
 import android.support.v4.app.FragmentManager
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 
@@ -9,6 +10,24 @@ import android.widget.Toast
  * Created by SixGL on 2019/07/26.
  */
 class SKDialog : SKBaseDialog() {
+
+    override fun logic() {
+        if (view != null) {
+            if (mViews != null && mViews?.size() > 0) {
+                for (it in 0 until mViews.size()) {
+                    val keyAt = mViews.keyAt(it)
+                    Log.i(TAG, "layout View id=$keyAt")
+                    val childView = view?.findViewById<View>(mViews.keyAt(it))
+                    if (childView != null)
+                        childView.setOnClickListener(k_listener)
+                    else
+                        Log.i(TAG, "Error ViewId = $keyAt")
+                }
+            }
+        } else {
+            Log.i(TAG, "View is null")
+        }
+    }
 
 
     /**
@@ -59,6 +78,15 @@ class SKDialog : SKBaseDialog() {
     }
 
     /**
+     * 设置Dialog全屏
+     * @param screen
+     * */
+    fun setFullScreen(screen: Boolean): SKDialog {
+        k_fullscreen = screen
+        return this
+    }
+
+    /**
      * 设置Dialog框以外的背景透明度
      * 默认0.5f
      * @param transparency 0 - 1f
@@ -67,6 +95,7 @@ class SKDialog : SKBaseDialog() {
         k_dialogOutTransparency = transparency
         return this
     }
+
 
 
     /**
@@ -86,7 +115,7 @@ class SKDialog : SKBaseDialog() {
         if (k_fragmentManager == null)
             Toast.makeText(context, "fragmentManager 不能为null", Toast.LENGTH_SHORT).show()
         else
-            showDialog()
+            show(k_fragmentManager, "sk")
         return this
     }
 }
