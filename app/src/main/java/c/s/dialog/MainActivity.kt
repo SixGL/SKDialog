@@ -81,11 +81,12 @@ class MainActivity : AppCompatActivity() {
                         view?.findViewById<TextView>(R.id.s_tv_loading)?.text = "正在加载..."
                         view?.findViewById<ConstraintLayout>(R.id.s_ct_loading)?.setBackgroundResource(R.drawable.s_shape_loading_test)
                     }
-                })// 用于dialog弹出后，处理dialog内部业务逻辑
+                })// 用于dialog弹出后，处理dialog内部业务逻辑/ui的更新
                 .show()// 弹出dialog，放置最后调用
 
     }
 
+    // 简易Loading
     var showAlert: SLoadingAlertDialog? = null
     fun showAlertLoadingDialog(v: View) {
         // 默认简洁的AlertDialog，不需要FragmentManager
