@@ -31,11 +31,17 @@ dependencies {
 	}
 ```
 ### 使用
+
 新版本重构：构造者模式
+
+请仔细观看使用说明！！！
+请仔细观看使用说明！！！
+请仔细观看使用说明！！！
 #### 自定义布局
 ##### 使用方式/属性方法
 ```
- val dialog = SDialog.Builder()
+  var dialog:SDialog.Builder?=null
+  dialog = SDialog.Builder()
                 .setContentView(R.layout.dialog)// dialog 布局
                 .setViewClick(object : View.OnClickListener {
                     override fun onClick(v: View?) {
@@ -48,10 +54,11 @@ dependencies {
                             }
                             R.id.tvCenter -> {
                                 Toast.makeText(activitys, "美丽", Toast.LENGTH_SHORT).show()
-//                                dialogs.view?.findViewById<TextView>(R.id.tvCenter)?.text = "6666"
+                              //  dialog?.d?.getDialogView()?.findViewById<TextView>(R.id.tvCenter)?.text = "6666"  //点击控件更新ui
+
                             }
                         }
-//                        dialogs.dismiss()
+//                        dialogs.d?.dismiss()
                     }
                 }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)// 设置dialog布局控件的点击事件
                 .setcancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
@@ -84,6 +91,9 @@ setFramentManager（必须）
 addDismissListener（非必须） dialog关闭的时的回调
 addLogicListener（非必须）  用于处理dialog展示的内部业务逻辑/更新ui/获取dialog内部控件。开发者也可以直接调用getViewzi自行获取，这种方式需要使用Handler，延迟几十毫秒，更新ui才有效果
 show(） 展示
+
+ dialog?.d?.dismiss() // 可通过调用Builder下的d，获取dialog对象，在调用dismiss关闭
+ dialog?.d?.getDialogView() // 获取布局view，调用findViewById找到对应控件
 
 
 
