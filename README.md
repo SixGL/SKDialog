@@ -32,10 +32,14 @@ dependencies {
 ```
 ### 使用
 新版本重构：构造者模式
+请仔细观看使用说明！！！
+请仔细观看使用说明！！！
+请仔细观看使用说明！！！
 #### 自定义布局
 ##### 使用方式/属性方法
 ```
- val dialog = SDialog.Builder()
+  var dialog:SDialog.Builder?=null
+  dialog = SDialog.Builder()
                 .setContentView(R.layout.dialog)// dialog 布局
                 .setViewClick(object : View.OnClickListener {
                     override fun onClick(v: View?) {
@@ -48,7 +52,8 @@ dependencies {
                             }
                             R.id.tvCenter -> {
                                 Toast.makeText(activitys, "美丽", Toast.LENGTH_SHORT).show()
-//                                dialogs.view?.findViewById<TextView>(R.id.tvCenter)?.text = "6666"
+                              //  dialog?.d?.getDialogView()?.findViewById<TextView>(R.id.tvCenter)?.text = "6666"  //点击控件更新ui
+
                             }
                         }
 //                        dialogs.d?.dismiss()
@@ -86,6 +91,7 @@ addLogicListener（非必须）  用于处理dialog展示的内部业务逻辑/�
 show(） 展示
 
  dialogs.d?.dismiss() // 可通过调用Builder下的d，获取dialog对象，在调用dismiss关闭
+ dialog?.d?.getDialogView() // 获取布局view，调用findViewById找到对应控件
 
 
 
