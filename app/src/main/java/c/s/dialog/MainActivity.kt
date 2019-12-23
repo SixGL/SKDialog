@@ -24,10 +24,10 @@ class MainActivity : AppCompatActivity() {
         activitys = this
 
     }
-
+    var dialog:SDialog.Builder?=null
 
     fun showDialog(v: View) {
-        val dialog = SDialog.Builder()
+         dialog = SDialog.Builder()
                 .setContentView(R.layout.dialog)// dialog 布局
                 .setViewClick(object : View.OnClickListener {
                     override fun onClick(v: View?) {
@@ -40,10 +40,10 @@ class MainActivity : AppCompatActivity() {
                             }
                             R.id.tvCenter -> {
                                 Toast.makeText(activitys, "美丽", Toast.LENGTH_SHORT).show()
-//                                dialogs.view?.findViewById<TextView>(R.id.tvCenter)?.text = "6666"
+                                dialog?.d?.getDialogView()?.findViewById<TextView>(R.id.tvCenter)?.text = "6666"
                             }
                         }
-//                        dialogs.dismiss()
+//                         dialog?.d?.dismiss()
                     }
                 }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)// 设置dialog布局控件的点击事件
                 .setcancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
