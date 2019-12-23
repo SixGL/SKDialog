@@ -22,7 +22,7 @@ abstract class SBaseDialogFragment : DialogFragment() {
     protected var window: Window? = null
     protected var windowParams: WindowManager.LayoutParams? = null
     private var layoutView: View? = null
-    protected var k_width: Int = ViewGroup.LayoutParams.WRAP_CONTENT
+    protected var k_width: Int = ViewGroup.LayoutParams.MATCH_PARENT
     private fun isFullScreen(): Int {
         if (getFullScreen())
             return ViewGroup.LayoutParams.MATCH_PARENT

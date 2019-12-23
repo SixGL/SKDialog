@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)// 设置dialog布局控件的点击事件
                 .setcancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
-                .setAnimation(0) // 弹出动画
+//                .setAnimation(0) // 弹出动画
                 .setDialogOutTransparency(0.3f)// 弹出框外 背景透明度
                 .setGravity(Gravity.BOTTOM)// dialog弹出位置
                 .setFullScreen(false)// 是否全屏
