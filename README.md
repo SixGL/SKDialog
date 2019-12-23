@@ -51,7 +51,7 @@ dependencies {
 //                                dialogs.view?.findViewById<TextView>(R.id.tvCenter)?.text = "6666"
                             }
                         }
-//                        dialogs.dismiss()
+//                        dialogs.d?.dismiss()
                     }
                 }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)// 设置dialog布局控件的点击事件
                 .setcancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
@@ -84,6 +84,8 @@ setFramentManager（必须）
 addDismissListener（非必须） dialog关闭的时的回调
 addLogicListener（非必须）  用于处理dialog展示的内部业务逻辑/更新ui/获取dialog内部控件。开发者也可以直接调用getViewzi自行获取，这种方式需要使用Handler，延迟几十毫秒，更新ui才有效果
 show(） 展示
+
+ dialogs.d?.dismiss() // 可通过调用Builder下的d，获取dialog对象，在调用dismiss关闭
 
 
 
