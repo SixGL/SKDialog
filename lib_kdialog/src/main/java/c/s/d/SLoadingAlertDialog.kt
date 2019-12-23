@@ -62,7 +62,7 @@ class SLoadingAlertDialog {
     }
 
     fun show(): SLoadingAlertDialog {
-        val inflate = LayoutInflater.from(mActivity).inflate(R.layout.s_dialog_loading, null)
+        val inflate = LayoutInflater.from(mActivity).inflate(mLayoutId, null)
         dialog = AlertDialog.Builder(mActivity)
                 .setView(inflate)
                 .setCancelable(mCancelable)
