@@ -92,7 +92,7 @@ addDismissListener（非必须） dialog关闭的时的回调
 addLogicListener（非必须）  用于处理dialog展示的内部业务逻辑/更新ui/获取dialog内部控件。开发者也可以直接调用getViewzi自行获取，这种方式需要使用Handler，延迟几十毫秒，更新ui才有效果
 show(） 展示
 
- dialogs.d?.dismiss() // 可通过调用Builder下的d，获取dialog对象，在调用dismiss关闭
+ dialog?.d?.dismiss() // 可通过调用Builder下的d，获取dialog对象，在调用dismiss关闭
  dialog?.d?.getDialogView() // 获取布局view，调用findViewById找到对应控件
 
 
