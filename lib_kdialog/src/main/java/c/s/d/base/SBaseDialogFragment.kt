@@ -10,7 +10,7 @@ import android.util.SparseArray
 import android.view.*
 import c.s.d.util.DUtils
 import c.s.d.R
-import c.s.d.listener.DismissLitener
+import c.s.d.listener.DismissListener
 
 abstract class SBaseDialogFragment : DialogFragment() {
 
@@ -22,13 +22,6 @@ abstract class SBaseDialogFragment : DialogFragment() {
     protected var window: Window? = null
     protected var windowParams: WindowManager.LayoutParams? = null
     private var layoutView: View? = null
-    protected var k_width: Int = ViewGroup.LayoutParams.MATCH_PARENT
-    private fun isFullScreen(): Int {
-        if (getFullScreen())
-            return ViewGroup.LayoutParams.MATCH_PARENT
-        else
-            return ViewGroup.LayoutParams.WRAP_CONTENT
-    }
 
     override fun onDismiss(dialog: DialogInterface?) {
         super.onDismiss(dialog)
@@ -50,15 +43,20 @@ abstract class SBaseDialogFragment : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         beforeLayout()
         layoutView = inflater.inflate(getLayout(), window?.findViewById(android.R.id.content), false)
-        windowParams = window?.attributes
-        windowParams?.windowAnimations = getAnimation()
-        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window?.setLayout(k_width, isFullScreen())
+        setWindow()
         return layoutView
     }
 
+    private fun setWindow() {
+        windowParams = window?.attributes
+        windowParams?.windowAnimations = getAnimation()
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        val layoutParams = layoutView?.layoutParams!!
+        window?.setLayout(layoutParams?.width.toInt(), layoutParams?.height.toInt())
+    }
 
-     fun beforeLayout() {
+
+    fun beforeLayout() {
         window = dialog.window
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
     }
@@ -118,11 +116,6 @@ abstract class SBaseDialogFragment : DialogFragment() {
         return 0.5f
     }
 
-
-    protected open fun getFullScreen(): Boolean {
-        return false
-    }
-
     protected open fun getViews(): SparseArray<Int>? {
         return null
     }
@@ -131,7 +124,7 @@ abstract class SBaseDialogFragment : DialogFragment() {
         return null
     }
 
-    protected open fun dismissCallback(): DismissLitener? {
+    protected open fun dismissCallback(): DismissListener? {
         return null
     }
 

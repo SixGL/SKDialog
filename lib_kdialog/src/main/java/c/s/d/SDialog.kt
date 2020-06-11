@@ -6,7 +6,7 @@ import android.view.View
 import c.s.d.base.SBaseDialogFragment
 import c.s.d.base.SController
 import c.s.d.base.SController.Params
-import c.s.d.listener.DismissLitener
+import c.s.d.listener.DismissListener
 import c.s.d.listener.LogicListener
 
 
@@ -29,7 +29,7 @@ class SDialog : SBaseDialogFragment() {
         return c?.getLayoutId()!!
     }
 
-    override fun dismissCallback(): DismissLitener? {
+    override fun dismissCallback(): DismissListener? {
         return c?.dismissCallback()
     }
 
@@ -49,9 +49,6 @@ class SDialog : SBaseDialogFragment() {
         return c?.getAnimation()
     }
 
-    override fun getFullScreen(): Boolean {
-        return c?.getFullScreen()!!
-    }
 
     override fun getClickListener(): View.OnClickListener? {
         return c?.getClickListener()
@@ -132,14 +129,6 @@ class SDialog : SBaseDialogFragment() {
             return this
         }
 
-        /**
-         * 设置Dialog全屏
-         * @param screen
-         * */
-        fun setFullScreen(screen: Boolean): Builder {
-            p?.k_fullscreen = screen
-            return this
-        }
 
         /**
          * 设置Dialog框以外的背景透明度
@@ -169,7 +158,7 @@ class SDialog : SBaseDialogFragment() {
          * dialog dismiss 回调
          * @param
          * */
-        fun addDismissListener(listener: DismissLitener): Builder {
+        fun addDismissListener(listener: DismissListener): Builder {
             p?.k_dismisslistener = listener
             return this
         }
@@ -182,7 +171,6 @@ class SDialog : SBaseDialogFragment() {
             p?.k_LogicListener = listener
             return this
         }
-
     }
-
 }
+

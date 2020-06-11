@@ -65,7 +65,6 @@ dependencies {
                 .setAnimation(0) // 弹出动画
                 .setDialogOutTransparency(0.3f)// 弹出框外 背景透明度
                 .setGravity(Gravity.BOTTOM)// dialog弹出位置
-                .setFullScreen(false)// 是否全屏
                 .setFramentManager(supportFragmentManager) //FragmentManager
                 .addDismissListener(object : DismissLitener {
                     override fun dismissCallback(dialog: DialogInterface?) {
