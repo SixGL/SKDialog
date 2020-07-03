@@ -27,7 +27,7 @@ allprojects {
 ```
 dependencies {
 	     
-	     implementation 'com.github.SixGL:SKDialog:v0.2.1'
+	     implementation 'com.github.SixGL:SKDialog:v0.2.2'
 	}
 ```
 ### 使用
