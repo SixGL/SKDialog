@@ -68,16 +68,22 @@ class SLoadingAlertDialog {
                 .setCancelable(mCancelable)
                 .show()
 
-        val params = dialog?.getWindow()!!.getAttributes()
+        val params = dialog?.window!!.attributes
         params.width = dp2px(mWidth.toFloat())
         params.height = dp2px(mHeight.toFloat())
-        dialog?.getWindow()?.setAttributes(params)
-        dialog?.getWindow()?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.window?.attributes = params
+        dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        return this
+    }
+
+
+    fun dismiss(): SLoadingAlertDialog {
+        dialog?.dismiss()
         return this
     }
 
     private fun dp2px(dpVal: Float): Int {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
-                dpVal, mActivity?.getResources()?.getDisplayMetrics()).toInt()
+                dpVal, mActivity?.resources?.displayMetrics).toInt()
     }
 }

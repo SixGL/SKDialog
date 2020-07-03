@@ -8,9 +8,10 @@ import android.support.v4.app.DialogFragment
 import android.util.Log
 import android.util.SparseArray
 import android.view.*
-import c.s.d.util.DUtils
 import c.s.d.R
-import c.s.d.listener.DismissListener
+import c.s.d.base.help.DismissListener
+import c.s.d.base.help.LogicListener
+import c.s.d.base.help.shieldBackScreen
 
 abstract class SBaseDialogFragment : DialogFragment() {
 
@@ -36,7 +37,14 @@ abstract class SBaseDialogFragment : DialogFragment() {
         windowParams?.gravity = getGravity()
         window?.attributes = windowParams
         if (getDialogCancle()) {
-            DUtils.shield_back_screen(this)
+            shieldBackScreen(this)
+        }
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        if (getIsFullScreen()) {
+            setStyle(STYLE_NORMAL, R.style.K_Dialog_FULL_SCREEN);
         }
     }
 
@@ -55,14 +63,17 @@ abstract class SBaseDialogFragment : DialogFragment() {
         window?.setLayout(layoutParams?.width.toInt(), layoutParams?.height.toInt())
     }
 
-
-    fun beforeLayout() {
+    private fun beforeLayout() {
         window = dialog.window
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
     }
 
-    abstract fun logic(view: View)
-    abstract fun getLayout(): Int
+    private fun logic(view: View) {
+        val listener = getLogiclistener()
+        if (listener != null) {
+            listener?.logicCallback(this,view)
+        }
+    }
 
 
     private fun afterLayout(view: View) {
@@ -104,11 +115,23 @@ abstract class SBaseDialogFragment : DialogFragment() {
         return Gravity.CENTER
     }
 
+    protected open fun getLayout(): Int {
+        return 0
+    }
+
+    protected open fun getLayoutView(): View? {
+        return null
+    }
+
     protected open fun getAnimation(): Int? {
         return R.style.k_dialogAnim
     }
 
     protected open fun getDialogCancle(): Boolean {
+        return false
+    }
+
+    protected open fun getIsFullScreen(): Boolean {
         return false
     }
 
@@ -125,6 +148,10 @@ abstract class SBaseDialogFragment : DialogFragment() {
     }
 
     protected open fun dismissCallback(): DismissListener? {
+        return null
+    }
+
+    protected open fun getLogiclistener(): LogicListener? {
         return null
     }
 

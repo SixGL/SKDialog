@@ -1,28 +1,30 @@
 package c.s.d
 
+import android.os.Looper
 import android.support.v4.app.FragmentManager
+import android.util.Log
 import android.util.SparseArray
 import android.view.View
 import c.s.d.base.SBaseDialogFragment
 import c.s.d.base.SController
 import c.s.d.base.SController.Params
-import c.s.d.listener.DismissListener
-import c.s.d.listener.LogicListener
+import c.s.d.base.help.DismissListener
+import c.s.d.base.help.LogicListener
+import java.lang.Exception
 
 
 class SDialog : SBaseDialogFragment() {
 
-
-    override fun logic(v: View) {
-
-        if (c?.getLogiclistener() != null) {
-            c?.getLogiclistener()?.logicCallback(v)
-        }
-    }
-
-
     fun getDialogView(): View? {
         return view
+    }
+
+    override fun getLogiclistener(): LogicListener? {
+        return c?.getLogiclistener()
+    }
+
+    override fun getLayoutView(): View? {
+        return c?.getLayoutView()
     }
 
     override fun getLayout(): Int {
@@ -39,6 +41,10 @@ class SDialog : SBaseDialogFragment() {
 
     override fun getDialogCancle(): Boolean {
         return c?.getDialogCancle()!!
+    }
+
+    override fun getIsFullScreen(): Boolean {
+        return c?.getIsFullScreen()!!
     }
 
     override fun getViews(): SparseArray<Int>? {
@@ -59,7 +65,7 @@ class SDialog : SBaseDialogFragment() {
     }
 
 
-    var c: SController? = null
+    private var c: SController? = null
 
     init {
         c = SController()
@@ -67,7 +73,7 @@ class SDialog : SBaseDialogFragment() {
 
 
     class Builder {
-        var p: Params? = null
+        private var p: Params? = null
         var d: SDialog? = null
 
         init {
@@ -77,8 +83,34 @@ class SDialog : SBaseDialogFragment() {
         fun show(): Builder {
             d = SDialog()
             p?.apply(d?.c)
-            d?.show(d?.c?.getFragmentManager(), "sd")
+            if (d?.c?.getFragmentManager() != null) {
+                d?.show(d?.c?.getFragmentManager(), "sd")
+            } else {
+                println("请设置FragmentManager")
+            }
             return this
+        }
+
+        fun dismiss(): Builder {
+            try {
+                d?.dismiss()
+            } catch (e: Exception) {
+                println("dialog catch ${Log.getStackTraceString(e)}")
+                Looper.loop()
+            }
+            return this
+        }
+
+        /**
+         * 判断Dialog 是否显示
+         * */
+        fun isShow(): Boolean {
+            var isShow = false
+            isShow = (d?.dialog != null)
+            if (isShow) {
+                isShow = d?.dialog!!.isShowing
+            }
+            return isShow
         }
 
 
@@ -140,8 +172,15 @@ class SDialog : SBaseDialogFragment() {
             return this
         }
 
+        /**
+         * @param isFullScreen 是否全屏
+         * 跟随宿主（Activity、Fragment）：宿主沉浸式，dialogy也是
+         * */
+        fun setIsFullScreen(isFullScreen: Boolean): Builder {
+            p?.k_isFullScreen = isFullScreen
+            return this
+        }
 
-//
         /**
          * 批量设置点击事件
          * @param viewId 可变参数
