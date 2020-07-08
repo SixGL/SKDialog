@@ -28,6 +28,8 @@ allprojects {
 dependencies {
 	     
 	     implementation 'com.github.SixGL:SKDialog:v0.2.2'
+        // AndroidX 版本
+        //implementation 'com.github.SixGL:SKDialog:v0.2.3'
 	}
 ```
 ### 使用
