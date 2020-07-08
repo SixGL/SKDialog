@@ -1,7 +1,7 @@
 package c.s.d.base.help
 
 import android.content.DialogInterface
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.view.KeyEvent
 import android.view.View
 import c.s.d.base.SBaseDialogFragment
@@ -12,13 +12,13 @@ interface DismissListener {
 
 interface LogicListener {
 
-    fun logicCallback(dialog: DialogFragment, view: View?)
+    fun logicCallback(dialog: androidx.fragment.app.DialogFragment, view: View?)
 }
 
 /**
  * 屏蔽返回键
  */
-fun shieldBackScreen(dialogFragment: DialogFragment) {
+fun shieldBackScreen(dialogFragment: androidx.fragment.app.DialogFragment) {
     dialogFragment.dialog.setCanceledOnTouchOutside(false)
     dialogFragment.dialog.setOnKeyListener(object : DialogInterface.OnKeyListener {
         override fun onKey(dialog: DialogInterface?, keyCode: Int, event: KeyEvent?): Boolean {

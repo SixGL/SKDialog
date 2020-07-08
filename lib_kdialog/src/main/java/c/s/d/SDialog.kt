@@ -1,7 +1,7 @@
 package c.s.d
 
 import android.os.Looper
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.util.Log
 import android.util.SparseArray
 import android.view.View
@@ -118,7 +118,7 @@ class SDialog : SBaseDialogFragment() {
          * 设置FragmentManager管理器
          * @param fragmentManager
          * */
-        fun setFramentManager(fragmentManager: FragmentManager): Builder {
+        fun setFramentManager(fragmentManager: androidx.fragment.app.FragmentManager): Builder {
             p?.k_fragmentManager = fragmentManager
             return this
         }

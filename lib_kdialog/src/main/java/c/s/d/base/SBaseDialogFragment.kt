@@ -4,7 +4,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
+import androidx.fragment.app.DialogFragment
 import android.util.Log
 import android.util.SparseArray
 import android.view.*
@@ -13,7 +13,7 @@ import c.s.d.base.help.DismissListener
 import c.s.d.base.help.LogicListener
 import c.s.d.base.help.shieldBackScreen
 
-abstract class SBaseDialogFragment : DialogFragment() {
+abstract class SBaseDialogFragment : androidx.fragment.app.DialogFragment() {
 
     companion object {
         const val TAG = "SKBaseDialog_  "

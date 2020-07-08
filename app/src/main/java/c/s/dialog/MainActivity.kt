@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
-import android.support.constraint.ConstraintLayout
-import android.support.v4.app.DialogFragment
-import android.support.v7.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.DialogFragment
+import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.View
@@ -29,7 +29,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private var dialog = SDialog.Builder().apply {
-        SDialog.Builder().setContentView(R.layout.dialog)
+      setContentView(R.layout.dialog)
                 .setcancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
                 .setAnimation(R.style.k_dialogAnim) // 弹出动画
                 .setDialogOutTransparency(0.3f)// 弹出框外 背景透明度
@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             }
         }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)
                 .addLogicListener(object :LogicListener{
-                    override fun logicCallback(dialog: DialogFragment, view: View?) {
+                    override fun logicCallback(dialog: androidx.fragment.app.DialogFragment, view: View?) {
                         // 在这设置点击事件也可以
                         // 业务逻辑处理
                         // findviewByid
@@ -85,7 +85,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 })// dialog关闭回调
                 .addLogicListener(object : LogicListener {
-                    override fun logicCallback(dialog: DialogFragment, view: View?) {
+                    override fun logicCallback(dialog: androidx.fragment.app.DialogFragment, view: View?) {
                         view?.findViewById<TextView>(R.id.s_tv_loading)?.text = "正在加载..."
                         view?.findViewById<ConstraintLayout>(R.id.s_ct_loading)?.setBackgroundResource(R.drawable.s_shape_loading_test)
                     }

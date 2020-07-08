@@ -1,6 +1,6 @@
 package c.s.d.base
 
-import android.support.v4.app.FragmentManager
+import androidx.fragment.app.FragmentManager
 import android.util.SparseArray
 import android.view.Gravity
 import android.view.View
@@ -11,7 +11,7 @@ import c.s.d.base.help.LogicListener
 
 class SController {
     private var mViews: SparseArray<Int>? = null
-    private var k_fragmentManager: FragmentManager? = null
+    private var k_fragmentManager: androidx.fragment.app.FragmentManager? = null
     private var k_dialogOutTransparency: Float = 0.5f
     private var k_dialogGravity: Int = Gravity.NO_GRAVITY
     private var k_dialogAnimation: Int = R.style.k_dialogAnim
@@ -40,7 +40,7 @@ class SController {
         return k_dialogGravity
     }
 
-    fun getFragmentManager(): FragmentManager? {
+    fun getFragmentManager(): androidx.fragment.app.FragmentManager? {
         return k_fragmentManager
     }
 
@@ -77,7 +77,7 @@ class SController {
     class Params {
 
         var mViews = SparseArray<Int>()
-        var k_fragmentManager: FragmentManager? = null
+        var k_fragmentManager: androidx.fragment.app.FragmentManager? = null
         var k_dialogOutTransparency: Float = 0.5f
         var k_dialogGravity: Int = Gravity.NO_GRAVITY
         var k_dialogAnimation: Int = R.style.k_dialogAnim
