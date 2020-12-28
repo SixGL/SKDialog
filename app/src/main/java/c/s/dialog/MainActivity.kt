@@ -4,19 +4,19 @@ import android.app.Activity
 import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.fragment.app.DialogFragment
-import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.fragment.app.DialogFragment
 import c.s.d.SDialog
 import c.s.d.SLoadingAlertDialog
-import c.s.d.base.SBaseDialogFragment
 import c.s.d.base.help.DismissListener
 import c.s.d.base.help.LogicListener
+import c.s.dialog.databinding.DialogBinding
 
 class MainActivity : AppCompatActivity() {
 
@@ -26,14 +26,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         activitys = this
+
     }
 
     private var dialog = SDialog.Builder().apply {
-      setContentView(R.layout.dialog)
-                .setcancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
+        setContentView(R.layout.dialog)
+                .setCancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
                 .setAnimation(R.style.k_dialogAnim) // 弹出动画
                 .setDialogOutTransparency(0.3f)// 弹出框外 背景透明度
-                .setIsFullScreen(true)
                 .setGravity(Gravity.BOTTOM)// dialog弹出位置
                 .setFramentManager(supportFragmentManager) //FragmentManager
                 .addDismissListener(object : DismissListener {
@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showDialog(v: View) {
-
         dialog.setViewClick(View.OnClickListener { v ->
             // 设置点击事件
             when (v?.id) {
@@ -63,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)
-                .addLogicListener(object :LogicListener{
+                .addLogicListener(object : LogicListener {
                     override fun logicCallback(dialog: androidx.fragment.app.DialogFragment, view: View?) {
                         // 在这设置点击事件也可以
                         // 业务逻辑处理
@@ -85,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                     }
                 })// dialog关闭回调
                 .addLogicListener(object : LogicListener {
-                    override fun logicCallback(dialog: androidx.fragment.app.DialogFragment, view: View?) {
+                    override fun logicCallback(dialog: DialogFragment, view: View?) {
                         view?.findViewById<TextView>(R.id.s_tv_loading)?.text = "正在加载..."
                         view?.findViewById<ConstraintLayout>(R.id.s_ct_loading)?.setBackgroundResource(R.drawable.s_shape_loading_test)
                     }
@@ -111,5 +110,38 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed(Runnable {
             showAlert?.getAlertDialog()?.dismiss()
         }, 3000)
+    }
+
+    /**
+     * 结合ViewBingding 使用
+     * */
+    fun viewBindingClick(view: View) {
+        val binding = DialogBinding.inflate(layoutInflater, window?.findViewById(android.R.id.content), false)
+        val show = SDialog.Builder().setContentView(binding.root)
+                .setCancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
+                .setAnimation(R.style.k_dialogAnim) // 弹出动画
+                .setDialogOutTransparency(0.3f)// 弹出框外 背景透明度
+                .setGravity(Gravity.BOTTOM)// dialog弹出位置
+                .setFramentManager(supportFragmentManager) //FragmentManager
+                .addDismissListener(object : DismissListener {
+                    override fun dismissCallback(dialog: DialogInterface?) {
+                        // dialog关闭回调
+                    }
+                })
+                .addLogicListener(object : LogicListener {
+                    override fun logicCallback(dialog: DialogFragment, view: View?) {
+                        binding.tvCenter.text = "ViewBinding 设置的文字"
+                        binding.tvCancle.setOnClickListener { dialog?.dismiss() }
+                    }
+
+                })
+                .show()
+        Handler().postDelayed(Runnable {
+            if (show.isShow()) {
+
+                println("dialogss is Show")
+            }
+        }, 2000)
+
     }
 }

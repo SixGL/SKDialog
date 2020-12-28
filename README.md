@@ -29,7 +29,7 @@ dependencies {
 	     
 	     implementation 'com.github.SixGL:SKDialog:v0.2.2'
         // AndroidX 版本
-        //implementation 'com.github.SixGL:SKDialog:v0.2.3'
+        //implementation 'com.github.SixGL:SKDialog:v0.2.4'
 	}
 ```
 ### 使用
@@ -65,7 +65,6 @@ dependencies {
                 }, R.id.tvCancle, R.id.tvSure, R.id.tvCenter)// 设置dialog布局控件的点击事件
                 .setcancelable(false)// 是否屏蔽蔽触摸弹出框外和返回键关闭dialog
                 .setAnimation(0) // 弹出动画
-                .setIsFullScreen(true) // 全屏
                 .setDialogOutTransparency(0.3f)// 弹出框外 背景透明度
                 .setGravity(Gravity.BOTTOM)// dialog弹出位置
                 .setFramentManager(supportFragmentManager) //FragmentManager
@@ -81,6 +80,31 @@ dependencies {
                 })// 用于dialog弹出后，处理dialog内部业务逻辑
                 .show()// 弹出dialog，放置最后调用
 ```
+##### 如何结合ViewBinding使用
+```
+        // 需要自己写
+        val binding = DialogBinding.inflate(layoutInflater, window?.findViewById(android.R.id.content), false)
+        // 把binding.root 传入即可
+        val show = SDialog.Builder().setContentView(binding.root)
+                .setCancelable(false)
+                .setAnimation(R.style.k_dialogAnim)
+                .setDialogOutTransparency(0.3f)
+                .setGravity(Gravity.BOTTOM)
+                .setFramentManager(supportFragmentManager)
+                .addDismissListener(object : DismissListener {
+                    override fun dismissCallback(dialog: DialogInterface?) {
+                        // dialog关闭回调
+                    }
+                })
+                .addLogicListener(object : LogicListener {
+                    override fun logicCallback(dialog: DialogFragment, view: View?) {
+                        binding.tvCenter.text = "ViewBinding 设置的文字"
+                        binding.tvCancle.setOnClickListener { dialog?.dismiss() }
+                    }
+
+                })
+                .show()
+```
 ##### 属性介绍
 ```
 setContentView（必须）     设置布局
@@ -90,10 +114,11 @@ setcancelable（非必须）    是否屏蔽返回键和触摸对话框外的屏
 setAnimation（非必须）    Dialog的进入退出动画，默认支持 进入从下往上  退出 从上往下，如果不需要动画设置为0即可
 setDialogOutTransparency（）非必须   对话框以外屏幕的透明度。0-1f。默认时0.5f
 setGravity（非必须）    设置Dialog的位置
-setIsFullScreen(true)（非必须） // 全屏
 addDismissListener（非必须） dialog关闭的时的回调
 addLogicListener（非必须）  用于处理dialog展示的内部业务逻辑/更新ui/获取dialog内部控件。开发者也可以直接调用getViewzi自行获取，这种方式需要使用Handler，延迟几十毫秒，更新ui才有效果
 show(） 展示
+
+isShow() // 判断Dialog是否在展示
 
  dialog?.d?.dismiss() // 可通过调用Builder下的d，获取dialog对象，在调用dismiss关闭
  dialog?.d?.getDialogView() // 获取布局view，调用findViewById找到对应控件

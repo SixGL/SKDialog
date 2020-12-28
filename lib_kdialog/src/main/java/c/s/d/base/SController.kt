@@ -1,9 +1,9 @@
 package c.s.d.base
 
-import androidx.fragment.app.FragmentManager
 import android.util.SparseArray
 import android.view.Gravity
 import android.view.View
+import androidx.fragment.app.FragmentManager
 import c.s.d.R
 import c.s.d.base.help.DismissListener
 
@@ -11,12 +11,11 @@ import c.s.d.base.help.LogicListener
 
 class SController {
     private var mViews: SparseArray<Int>? = null
-    private var k_fragmentManager: androidx.fragment.app.FragmentManager? = null
+    private var k_fragmentManager: FragmentManager? = null
     private var k_dialogOutTransparency: Float = 0.5f
     private var k_dialogGravity: Int = Gravity.NO_GRAVITY
     private var k_dialogAnimation: Int = R.style.k_dialogAnim
     private var k_cancelable: Boolean = false
-    private var k_isFullScreen: Boolean = false
     private var k_listener: View.OnClickListener? = null
     private var k_layoutId: Int = 0
     private var k_contentView: View? = null
@@ -40,7 +39,7 @@ class SController {
         return k_dialogGravity
     }
 
-    fun getFragmentManager(): androidx.fragment.app.FragmentManager? {
+    fun getFragmentManager(): FragmentManager? {
         return k_fragmentManager
     }
 
@@ -55,11 +54,6 @@ class SController {
     fun getDialogOutTransparency(): Float {
         return k_dialogOutTransparency
     }
-
-    fun getIsFullScreen(): Boolean {
-        return k_isFullScreen
-    }
-
 
     fun getViews(): SparseArray<Int>? {
         return mViews
@@ -82,7 +76,6 @@ class SController {
         var k_dialogGravity: Int = Gravity.NO_GRAVITY
         var k_dialogAnimation: Int = R.style.k_dialogAnim
         var k_cancelable: Boolean = false
-        var k_isFullScreen: Boolean = false
         var k_listener: View.OnClickListener? = null
         var k_layoutId: Int = 0
         var k_contentView: View? = null
@@ -95,7 +88,6 @@ class SController {
             c?.k_dialogGravity = k_dialogGravity
             c?.k_dialogAnimation = k_dialogAnimation
             c?.k_cancelable = k_cancelable
-            c?.k_isFullScreen = k_isFullScreen
             c?.k_listener = k_listener
             c?.k_layoutId = k_layoutId
             c?.k_dismisslistener = k_dismisslistener

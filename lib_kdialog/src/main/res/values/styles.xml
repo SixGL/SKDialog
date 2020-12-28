@@ -9,8 +9,11 @@
 
     <style name="K_Dialog_FULL_SCREEN" parent="AlertDialog.AppCompat">
         <item name="android:background">@android:color/transparent</item>
+<!--        控制悬浮窗背景是否变暗-->
         <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowNoTitle">true</item>
+<!--        代码中已经设置  dialog?.requestWindowFeature(Window.FEATURE_NO_TITLE)-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        windowIsFloating意思是dialog是否悬浮在activity上 true:可以被软键盘顶起来  false:不可以 -->
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowFullscreen">true</item>
     </style>

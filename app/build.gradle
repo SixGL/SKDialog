@@ -20,6 +20,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    viewBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -31,6 +34,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     api project(':lib_kdialog')
+//    api 'com.github.SixGL:SKDialog:v0.2.3'
 //    implementation 'com.github.SixGL:SKDialog:v0.2.1'
 //    implementation 'com.github.SixGL:SKDialog:0.1-release'
 //    implementation 'com.github.SixGL:SKDialog:0.1.2'

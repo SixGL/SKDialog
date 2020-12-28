@@ -28,7 +28,7 @@ class SDialog : SBaseDialogFragment() {
     }
 
     override fun getLayout(): Int {
-        return c?.getLayoutId()!!
+        return c?.getLayoutId() ?: 0
     }
 
     override fun dismissCallback(): DismissListener? {
@@ -43,9 +43,6 @@ class SDialog : SBaseDialogFragment() {
         return c?.getDialogCancle()!!
     }
 
-    override fun getIsFullScreen(): Boolean {
-        return c?.getIsFullScreen()!!
-    }
 
     override fun getViews(): SparseArray<Int>? {
         return c?.getViews()
@@ -84,7 +81,7 @@ class SDialog : SBaseDialogFragment() {
             d = SDialog()
             p?.apply(d?.c)
             if (d?.c?.getFragmentManager() != null) {
-                d?.show(d?.c?.getFragmentManager(), "sd")
+                d?.show(d?.c?.getFragmentManager()!!, "sd")
             } else {
                 println("请设置FragmentManager")
             }
@@ -93,7 +90,7 @@ class SDialog : SBaseDialogFragment() {
 
         fun dismiss(): Builder {
             try {
-                d?.dismiss()
+                d?.dismissAllowingStateLoss()
             } catch (e: Exception) {
                 println("dialog catch ${Log.getStackTraceString(e)}")
                 Looper.loop()
@@ -118,7 +115,7 @@ class SDialog : SBaseDialogFragment() {
          * 设置FragmentManager管理器
          * @param fragmentManager
          * */
-        fun setFramentManager(fragmentManager: androidx.fragment.app.FragmentManager): Builder {
+        fun setFramentManager(fragmentManager: FragmentManager): Builder {
             p?.k_fragmentManager = fragmentManager
             return this
         }
@@ -129,6 +126,15 @@ class SDialog : SBaseDialogFragment() {
          * */
         fun setContentView(layoutId: Int): Builder {
             p?.k_layoutId = layoutId
+            return this
+        }
+
+        /**
+         * 设置Layout
+         * @param View
+         * */
+        fun setContentView(layoutView: View): Builder {
+            p?.k_contentView = layoutView
             return this
         }
 
@@ -147,7 +153,7 @@ class SDialog : SBaseDialogFragment() {
          * 屏蔽触摸dialog框以外屏幕、返回键  关闭dialog
          * @param cancelable
          * */
-        fun setcancelable(cancelable: Boolean): Builder {
+        fun setCancelable(cancelable: Boolean): Builder {
             p?.k_cancelable = cancelable
             return this
         }
@@ -161,7 +167,6 @@ class SDialog : SBaseDialogFragment() {
             return this
         }
 
-
         /**
          * 设置Dialog框以外的背景透明度
          * 默认0.5f
@@ -169,15 +174,6 @@ class SDialog : SBaseDialogFragment() {
          * */
         fun setDialogOutTransparency(transparency: Float): Builder {
             p?.k_dialogOutTransparency = transparency
-            return this
-        }
-
-        /**
-         * @param isFullScreen 是否全屏
-         * 跟随宿主（Activity、Fragment）：宿主沉浸式，dialogy也是
-         * */
-        fun setIsFullScreen(isFullScreen: Boolean): Builder {
-            p?.k_isFullScreen = isFullScreen
             return this
         }
 
